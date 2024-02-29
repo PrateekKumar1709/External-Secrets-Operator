@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault-secrets-app
+  namespace: argocd # Install the application in Argo CD's namespace
+spec:
+  project: default  # Assign the Application to the 'default' project
+  source:
+    repoURL: https://github.com/PrateekKumar1709/External-Secrets-Operator-Tutorial 
+    targetRevision: HEAD  # Or a specific branch/tag
+    path: ExternalSecret  # Since the ExternalSecret.yaml is at the root of your repo
+  destination:
+    server: https://kubernetes.default.svc  # The Kubernetes API server
+    namespace: external-secrets # Target namespace for the ExternalSecret
+  syncPolicy:
+    automated: # Enable automatic syncing 
+      prune: true
